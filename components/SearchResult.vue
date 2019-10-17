@@ -11,6 +11,23 @@
                 <div slot="header">
                     <a :href="element.url" target="_blank">{{ element.Name }}</a>
                     <el-button @click="del(element.ID)" icon="el-icon-delete" circle ></el-button>
+                    <el-button @click="drawer = true" icon="el-icon-edit" circle ></el-button>
+                    <el-drawer
+                      title="タスク編集"
+                      :visible.sync="drawer"
+                      size="30%">
+                      <div>
+                        <el-input placeholder="Please input" v-model="inputName" v-init:inputName=element.Name></el-input>
+                        <el-input
+                          type="textarea" 
+                          placeholder="Please input" 
+                          :rows="5"
+                          v-model="inputDes" 
+                          v-init:inputDes=element.Description>
+                        </el-input>
+                        <el-button @click=updateTask(element.ID)>Update</el-button>
+                      </div>
+                    </el-drawer>
                 </div>
                 <div class="bottom content-style text">
                    <div>{{ element.Description }}</div>
@@ -29,11 +46,21 @@
 <script lang="babel">
 import {mapState} from 'vuex'
 import axios from "axios"
+import Vue from 'vue'
+
+Vue.directive('init', {
+  bind: function (el, binding, vnode) {
+    vnode.context[binding.arg] = binding.value
+  }
+})
 
 export default {
     data () {
         return {
-            scrollY: 0
+          drawer: false,
+          scrollY: 0,
+          inputName: '',
+          inputDes: ''
         }
     },
     mounted () {
@@ -54,8 +81,10 @@ export default {
             axios.delete('http://localhost:8000/v1/tasks/' + taskId)
             .then(res => {
               if(res.data === "success"){
-                    this.sendRequest()
-                }
+                this.$store.dispatch('getItems', {
+                  keyword: ''
+                })
+              }
             })
             .catch(error => {
               console.error(error);
@@ -66,6 +95,32 @@ export default {
         sendRequest () {
             this.$store.dispatch('getItems', {
                 keyword: ''
+            })
+        },
+        handleClose(done) {
+        this.$confirm('You still have unsaved data, proceed?')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+        },
+        updateTask: function (taskId) {
+            axios.put('http://localhost:8000/v1/tasks/' + taskId, {
+                Name: this.inputName,
+                Description: this.inputDes  
+            })
+            .then(res => {
+              if(res.data === "success"){
+                this.drawer = false
+                this.$store.dispatch('getItems', {
+                  keyword: ''
+                })
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              commit("hideLoading");
+              this.$router.push("/error");
             })
         }
     }
