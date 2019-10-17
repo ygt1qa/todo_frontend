@@ -2,7 +2,7 @@
 <div>
     <!-- 検索結果が0件の場合-->
     <template v-if="lists.length === 0 && !isLoading">
-        <i class="el-icon-warning">&nbsp;No results found for your keyword.</i>
+        <i class="el-icon-warning">&nbsp;No tasks found.</i>
     </template>
 
     <template v-else>
@@ -10,6 +10,7 @@
             <el-card :body-style="{ padding: '15px' }" class="box-card">
                 <div slot="header">
                     <a :href="element.url" target="_blank">{{ element.Name }}</a>
+                    <el-button @click="del(element.ID)" icon="el-icon-delete" circle ></el-button>
                 </div>
                 <div class="bottom content-style text">
                    <div>{{ element.Description }}</div>
@@ -27,6 +28,7 @@
 
 <script lang="babel">
 import {mapState} from 'vuex'
+import axios from "axios"
 
 export default {
     data () {
@@ -47,6 +49,24 @@ export default {
         scrollTop: function () {
             document.body.scrollTop = 0
             document.documentElement.scrollTop = 0
+        },
+        del: function (taskId) {
+            axios.delete('http://localhost:8000/v1/tasks/' + taskId)
+            .then(res => {
+              if(res.data === "success"){
+                    this.sendRequest()
+                }
+            })
+            .catch(error => {
+              console.error(error);
+              commit("hideLoading");
+              this.$router.push("/error");
+            })
+        },
+        sendRequest () {
+            this.$store.dispatch('getItems', {
+                keyword: ''
+            })
         }
     }
 }

@@ -4,12 +4,14 @@
             <el-input placeholder="search by keyword" prefix-icon="el-icon-search" v-model="searchForm.keyword" @keyup.enter.native="search('searchForm')"/>
         </el-form-item>
         <el-form-item>
-            <el-button @click="search('searchForm')">search</el-button>
+            <el-button @click="add('searchForm')">add</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script lang="babel">
+import axios from "axios";
+
 export default {
     data () {
         return {
@@ -28,17 +30,25 @@ export default {
         }
     },
     methods: {
-        search(form){
+        add(form){
             this.$refs[form].validate((valid) => {
                 if (!valid) {
                     return false
                 }
-                this.sendRequest()
+                this.addTask()
             })
         },
-        sendRequest () {
-            this.$store.dispatch('getItems', {
-                keyword: this.searchForm.keyword
+        addTask: function () {
+            axios.post('http://localhost:8000/v1/tasks', {
+                Name: this.searchForm.keyword,
+                Description: ''
+            })
+            .then(response => {
+                if(response.data === "success"){
+                    this.$store.dispatch('getItems', {
+                        keyword: ''
+                    })
+                }
             })
         }
     }

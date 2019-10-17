@@ -3,7 +3,7 @@
         <my-header />
         <nuxt />
         <my-footer />
-    <div>
+    </div>
 </template>
 
 <script>
