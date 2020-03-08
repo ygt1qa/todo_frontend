@@ -1,3 +1,8 @@
+# local
 yarn install
 
-yarn run build
+yarn run start
+
+# docker
+docker-compose build
+docker-compose up

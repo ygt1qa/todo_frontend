@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/user/.nodebrew/node/v13.7.0/bin/node /Users/user/.nodebrew/current/bin/yarn add normalize.csss
+  /Users/user/.nodebrew/node/v13.7.0/bin/node /Users/user/.nodebrew/current/bin/yarn start
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/user/.nodebrew/current/bin:/Users/user/dev/bin:/Users/user/Documents/flutter/bin:/Users/user/Documents/flutter/bin
+  /usr/local/opt/openssl/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/user/.nodebrew/current/bin:/Users/user/dev/bin:/usr/local/opt/openssl/bin:/Users/user/Documents/flutter/bin:/Users/user/Documents/flutter/bin
 
 Yarn version: 
   1.22.0
@@ -14,17 +14,12 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/normalize.csss: Not found
-      at Request.params.callback [as _callback] (/Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:66975:18)
-      at Request.self.callback (/Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:140727:22)
-      at Request.emit (events.js:321:20)
-      at Request.<anonymous> (/Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:141699:10)
-      at Request.emit (events.js:321:20)
-      at IncomingMessage.<anonymous> (/Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:141621:12)
-      at Object.onceWrapper (events.js:427:28)
-      at IncomingMessage.emit (events.js:333:22)
-      at endReadableNT (_stream_readable.js:1201:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  SyntaxError: /Users/user/dev/src/github.com/ygt1qa/todo_frontend/package.json: Unexpected string in JSON at position 265
+      at JSON.parse (<anonymous>)
+      at /Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /Users/user/.nodebrew/node/v13.7.0/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -35,6 +30,7 @@ npm manifest:
     "author": "YASUYUKI <ygt1qa3@gmail.com>",
     "license": "MIT",
     "scripts": {
+      "start": "webpack — config webpack.config.js"
       "serve": "live-server public/",
       "build": "webpack --watch",
       "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
@@ -43,10 +39,13 @@ npm manifest:
       "@babel/core": "^7.8.4",
       "@babel/preset-env": "^7.8.4",
       "@babel/preset-react": "^7.8.3",
+      "axios": "^0.19.2",
       "babel-loader": "^8.0.6",
       "css-loader": "^3.4.2",
       "live-server": "^1.2.1",
+      "gulp-sass": "^3.1.0",
       "node-sass": "^4.13.1",
+      "normalize.css": "^8.0.1",
       "react": "^16.12.0",
       "react-dom": "^16.12.0",
       "sass-loader": "^8.0.2",
@@ -1224,6 +1223,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
     integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
   
+  axios@^0.19.2:
+    version "0.19.2"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+    integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+    dependencies:
+      follow-redirects "1.5.10"
+  
   babel-loader@^8.0.6:
     version "8.0.6"
     resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.0.6.tgz#e33bdb6f362b03f4bb141a0c21ab87c501b70dfb"
@@ -1883,6 +1889,13 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
+  debug@=3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+    integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+    dependencies:
+      ms "2.0.0"
+  
   debug@^4.0.1, debug@^4.1.0:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
@@ -2502,6 +2515,13 @@ Lockfile:
     dependencies:
       inherits "^2.0.3"
       readable-stream "^2.3.6"
+  
+  follow-redirects@1.5.10:
+    version "1.5.10"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+    integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
+    dependencies:
+      debug "=3.1.0"
   
   for-in@^1.0.2:
     version "1.0.2"
@@ -3889,6 +3909,11 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
     integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
+  
+  normalize.css@^8.0.1:
+    version "8.0.1"
+    resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+    integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
   
   npm-run-path@^2.0.0:
     version "2.0.2"
