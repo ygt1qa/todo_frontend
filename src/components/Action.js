@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const Action = (props) => (
-  <div>
-    <button
-      className="big-button"
-      onClick={props.handlePick}
-      disabled={!props.hasOptions}
-    >
-      What should I do?
+function Action(props) {
+  return (
+    <div>
+      <button
+        className="big-button"
+        onClick={props.handlePick}
+        disabled={!props.hasOptions}
+      >
+        What should I do?
         </button>
-  </div>
-);
+    </div>
+  );
+}
 
 export default Action;
