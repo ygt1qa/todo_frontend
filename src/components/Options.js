@@ -2,7 +2,6 @@
 import React from 'react';
 import Option from './Option';
 import { gql } from "apollo-boost";
-import { Query } from 'react-apollo';
 import { useQuery } from '@apollo/react-hooks';
 
 export const ALL_TODOS = gql`
@@ -15,7 +14,7 @@ export const ALL_TODOS = gql`
   }
 `
 
-function Options(props) {
+const Options = (props) => {
   const { loading, error, data } = useQuery(ALL_TODOS);
 
   if (loading) return <p>Loading...</p>;

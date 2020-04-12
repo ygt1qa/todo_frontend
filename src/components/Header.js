@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-function Header(props) {
+const Header = (props) => {
   return (
     <div className="header">
       <div className="container">
